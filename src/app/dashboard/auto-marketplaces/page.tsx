@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, ExternalLink, Settings, TrendingUp, Users, Package } from "lucide-react"
@@ -228,7 +228,6 @@ const autoMarketplaces = [
 
 export default function AutoMarketplacesPage() {
   const connectedMarketplaces = autoMarketplaces.filter(m => m.status === "connected")
-  const pendingMarketplaces = autoMarketplaces.filter(m => m.status === "pending")
   
   const totalProducts = connectedMarketplaces.reduce((sum, m) => sum + m.products, 0)
   const totalSales = connectedMarketplaces.reduce((sum, m) => sum + m.sales, 0)

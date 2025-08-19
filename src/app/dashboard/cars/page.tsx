@@ -1,18 +1,16 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { 
-  Search, 
   Filter, 
   Plus, 
   Car, 
   TrendingUp, 
   DollarSign, 
-  Calendar,
   MapPin,
   Fuel,
   Settings,
@@ -249,7 +247,7 @@ export default function CarsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Auto's
+            Auto&apos;s
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
             Beheer je auto voorraad en verkoopkanalen
@@ -273,7 +271,7 @@ export default function CarsPage() {
           <CardContent>
             <div className="text-2xl font-bold">€{stats.totalRevenue.toLocaleString()}</div>
             <p className="text-xs text-muted-foreground">
-              van alle auto's
+              van alle auto&apos;s
             </p>
           </CardContent>
         </Card>
@@ -305,7 +303,7 @@ export default function CarsPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Aantal Auto's</CardTitle>
+            <CardTitle className="text-sm font-medium">Aantal Auto&apos;s</CardTitle>
             <Car className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -327,7 +325,7 @@ export default function CarsPage() {
             <div className="flex flex-col sm:flex-row gap-2">
               <div className="flex-1">
                 <Input
-                  placeholder="Zoek auto's..."
+                  placeholder="Zoek auto&apos;s..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full"

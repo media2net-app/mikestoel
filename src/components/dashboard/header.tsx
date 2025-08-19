@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell, Search, User, Settings, LogOut, X, Package, ShoppingCart, BarChart3, Settings as SettingsIcon, Car, Clock, TrendingUp, Plus, List } from "lucide-react"
+import { Bell, Search, User, Settings, LogOut, X, Package, ShoppingCart, BarChart3, Settings as SettingsIcon, Car, Clock, TrendingUp, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
@@ -527,7 +527,7 @@ export function DashboardHeader() {
                       <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-3 py-2">
                         {category}
                       </h3>
-                      {results.map((result, index) => {
+                      {results.map((result) => {
                         const Icon = result.icon
                         const globalIndex = filteredResults.findIndex(r => r.id === result.id)
                         const isSelected = globalIndex === selectedIndex

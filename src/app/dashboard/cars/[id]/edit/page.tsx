@@ -239,7 +239,7 @@ export default function EditCarPage() {
           <Link href="/dashboard/cars">
             <Button>
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Terug naar Auto's
+              Terug naar Auto&apos;s
             </Button>
           </Link>
         </div>

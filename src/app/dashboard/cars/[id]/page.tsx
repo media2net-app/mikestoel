@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { 
@@ -21,7 +21,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useParams, useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 // Mock car data (same as in cars page)
 const mockCars = [
@@ -260,7 +260,7 @@ export default function CarDetailPage() {
           <Link href="/dashboard/cars">
             <Button>
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Terug naar Auto's
+              Terug naar Auto&apos;s
             </Button>
           </Link>
         </div>
