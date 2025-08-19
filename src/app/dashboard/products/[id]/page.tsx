@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+
 import { 
   ArrowLeft, 
   Edit, 
@@ -13,7 +13,6 @@ import {
   Calendar,
   BarChart3,
   ExternalLink,
-  Copy,
   CheckCircle,
   AlertCircle
 } from "lucide-react"
@@ -165,7 +164,7 @@ export default function ProductDetailPage() {
   const router = useRouter()
   const productId = parseInt(params.id as string)
   
-  const [showApiKey, setShowApiKey] = useState(false)
+
   
   // Find product by ID
   const product = mockProducts.find(p => p.id === productId)

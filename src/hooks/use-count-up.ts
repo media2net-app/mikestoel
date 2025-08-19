@@ -19,8 +19,8 @@ export function useCountUp({
 }: UseCountUpProps) {
   const [count, setCount] = useState(start)
   const [isAnimating, setIsAnimating] = useState(false)
-  const frameRef = useRef<number>()
-  const startTimeRef = useRef<number>()
+  const frameRef = useRef<number | null>(null)
+  const startTimeRef = useRef<number | null>(null)
 
   useEffect(() => {
     if (!enabled) {
@@ -53,7 +53,7 @@ export function useCountUp({
     frameRef.current = requestAnimationFrame(animate)
 
     return () => {
-      if (frameRef.current) {
+      if (frameRef.current !== null) {
         cancelAnimationFrame(frameRef.current)
       }
     }

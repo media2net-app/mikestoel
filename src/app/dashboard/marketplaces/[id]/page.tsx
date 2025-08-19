@@ -11,17 +11,108 @@ import {
   Unlink,
   CheckCircle,
   AlertCircle,
-  Plus,
-  Trash2,
   Copy,
   Eye,
-  EyeOff
+  EyeOff,
+  X
 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+
+// Beschikbare platform velden
+const platformFields = [
+  { value: "title", label: "Titel", description: "Product titel" },
+  { value: "description", label: "Beschrijving", description: "Product beschrijving" },
+  { value: "price", label: "Prijs", description: "Verkoopprijs" },
+  { value: "purchasePrice", label: "Inkoopprijs", description: "Aankoopprijs" },
+  { value: "category", label: "Categorie", description: "Product categorie" },
+  { value: "condition", label: "Staat", description: "Product conditie" },
+  { value: "brand", label: "Merk", description: "Product merk" },
+  { value: "model", label: "Model", description: "Product model" },
+  { value: "sku", label: "SKU", description: "Stock Keeping Unit" },
+  { value: "ean", label: "EAN", description: "European Article Number" },
+  { value: "weight", label: "Gewicht", description: "Product gewicht" },
+  { value: "dimensions", label: "Afmetingen", description: "Product afmetingen" },
+  { value: "color", label: "Kleur", description: "Product kleur" },
+  { value: "material", label: "Materiaal", description: "Product materiaal" },
+  { value: "location", label: "Locatie", description: "Product locatie" },
+  { value: "stock", label: "Voorraad", description: "Beschikbare voorraad" },
+  { value: "images", label: "Afbeeldingen", description: "Product afbeeldingen" },
+  { value: "tags", label: "Tags", description: "Product tags" },
+  { value: "custom1", label: "Custom Veld 1", description: "Aangepast veld 1" },
+  { value: "custom2", label: "Custom Veld 2", description: "Aangepast veld 2" },
+  { value: "custom3", label: "Custom Veld 3", description: "Aangepast veld 3" }
+]
+
+// Marketplace-specifieke velden
+const marketplaceFields = {
+  marktplaats: [
+    { value: "titel", label: "Titel", description: "Product titel" },
+    { value: "beschrijving", label: "Beschrijving", description: "Product beschrijving" },
+    { value: "prijs", label: "Prijs", description: "Verkoopprijs" },
+    { value: "categorie", label: "Categorie", description: "Product categorie" },
+    { value: "staat", label: "Staat", description: "Product conditie" },
+    { value: "locatie", label: "Locatie", description: "Product locatie" },
+    { value: "merk", label: "Merk", description: "Product merk" },
+    { value: "model", label: "Model", description: "Product model" },
+    { value: "kleur", label: "Kleur", description: "Product kleur" },
+    { value: "materiaal", label: "Materiaal", description: "Product materiaal" },
+    { value: "afmetingen", label: "Afmetingen", description: "Product afmetingen" },
+    { value: "gewicht", label: "Gewicht", description: "Product gewicht" },
+    { value: "voorraad", label: "Voorraad", description: "Beschikbare voorraad" },
+    { value: "verzendkosten", label: "Verzendkosten", description: "Verzendkosten" },
+    { value: "verzendmethode", label: "Verzendmethode", description: "Verzendmethode" }
+  ],
+  bol: [
+    { value: "product_title", label: "Product Titel", description: "Product titel" },
+    { value: "product_description", label: "Product Beschrijving", description: "Product beschrijving" },
+    { value: "selling_price", label: "Verkoopprijs", description: "Verkoopprijs" },
+    { value: "product_category", label: "Product Categorie", description: "Product categorie" },
+    { value: "product_condition", label: "Product Conditie", description: "Product conditie" },
+    { value: "brand_name", label: "Merk Naam", description: "Product merk" },
+    { value: "model_name", label: "Model Naam", description: "Product model" },
+    { value: "ean_code", label: "EAN Code", description: "European Article Number" },
+    { value: "package_weight", label: "Pakket Gewicht", description: "Product gewicht" },
+    { value: "package_dimensions", label: "Pakket Afmetingen", description: "Product afmetingen" },
+    { value: "stock_quantity", label: "Voorraad Aantal", description: "Beschikbare voorraad" },
+    { value: "shipping_cost", label: "Verzendkosten", description: "Verzendkosten" },
+    { value: "shipping_method", label: "Verzendmethode", description: "Verzendmethode" },
+    { value: "fulfillment_type", label: "Fulfillment Type", description: "Fulfillment type" }
+  ],
+  ebay: [
+    { value: "item_title", label: "Item Titel", description: "Product titel" },
+    { value: "item_description", label: "Item Beschrijving", description: "Product beschrijving" },
+    { value: "start_price", label: "Start Prijs", description: "Start prijs voor veiling" },
+    { value: "buy_it_now_price", label: "Koop Nu Prijs", description: "Koop nu prijs" },
+    { value: "primary_category", label: "Primaire Categorie", description: "Product categorie" },
+    { value: "condition", label: "Conditie", description: "Product conditie" },
+    { value: "brand", label: "Merk", description: "Product merk" },
+    { value: "model", label: "Model", description: "Product model" },
+    { value: "item_weight", label: "Item Gewicht", description: "Product gewicht" },
+    { value: "shipping_type", label: "Verzend Type", description: "Verzend type" },
+    { value: "shipping_cost", label: "Verzendkosten", description: "Verzendkosten" },
+    { value: "listing_type", label: "Listing Type", description: "Type listing" },
+    { value: "duration", label: "Duur", description: "Listing duur" }
+  ],
+  amazon: [
+    { value: "product_title", label: "Product Titel", description: "Product titel" },
+    { value: "product_description", label: "Product Beschrijving", description: "Product beschrijving" },
+    { value: "standard_price", label: "Standaard Prijs", description: "Standaard verkoopprijs" },
+    { value: "product_category", label: "Product Categorie", description: "Product categorie" },
+    { value: "condition_type", label: "Conditie Type", description: "Product conditie" },
+    { value: "brand_name", label: "Merk Naam", description: "Product merk" },
+    { value: "model_name", label: "Model Naam", description: "Product model" },
+    { value: "asin", label: "ASIN", description: "Amazon Standard Identification Number" },
+    { value: "package_weight", label: "Pakket Gewicht", description: "Product gewicht" },
+    { value: "package_dimensions", label: "Pakket Afmetingen", description: "Product afmetingen" },
+    { value: "stock_quantity", label: "Voorraad Aantal", description: "Beschikbare voorraad" },
+    { value: "shipping_weight", label: "Verzend Gewicht", description: "Verzend gewicht" },
+    { value: "fulfillment_channel", label: "Fulfillment Kanaal", description: "Fulfillment kanaal" }
+  ]
+}
 
 const marketplaceData = {
   marktplaats: {
@@ -156,8 +247,10 @@ export default function MarketplaceDetailPage() {
   
   const [isLoading, setIsLoading] = useState(false)
   const [showApiKey, setShowApiKey] = useState(false)
+
+  const [settings, setSettings] = useState<Record<string, string | number | boolean>>(marketplace?.settings || {})
   const [fieldMappings, setFieldMappings] = useState(marketplace?.fields || [])
-  const [settings, setSettings] = useState(marketplace?.settings || {})
+  const [showFieldMapping, setShowFieldMapping] = useState(false)
 
   if (!marketplace) {
     return (
@@ -178,17 +271,121 @@ export default function MarketplaceDetailPage() {
     )
   }
 
-  const handleFieldMappingChange = (index: number, field: string, value: string) => {
-    const newMappings = [...fieldMappings]
-    newMappings[index] = { ...newMappings[index], [field]: value }
-    setFieldMappings(newMappings)
-  }
+
 
   const handleSave = async () => {
     setIsLoading(true)
     await new Promise(resolve => setTimeout(resolve, 1000))
-    console.log("Saving marketplace configuration:", { fieldMappings, settings })
+    console.log("Saving marketplace configuration:", { settings, fieldMappings })
     setIsLoading(false)
+  }
+
+  const handleFieldMappingToggle = (index: number) => {
+    const updatedMappings = [...fieldMappings]
+    updatedMappings[index].mapped = !updatedMappings[index].mapped
+    setFieldMappings(updatedMappings)
+  }
+
+  const handleFieldMappingChange = (index: number, field: string, value: string) => {
+    const updatedMappings = [...fieldMappings]
+    updatedMappings[index] = { ...updatedMappings[index], [field]: value }
+    
+    // Auto-generate example value when both platform and marketplace fields are selected
+    if (field === 'platform' || field === 'marketplace') {
+      const currentField = updatedMappings[index]
+      if (currentField.platform && currentField.marketplace) {
+        const platformField = platformFields.find(pf => pf.value === currentField.platform)
+        const marketplaceField = marketplaceFields[marketplace.id as keyof typeof marketplaceFields]?.find(mf => mf.value === currentField.marketplace)
+        
+        if (platformField && marketplaceField) {
+          // Generate example based on field type
+          let example = ""
+          switch (currentField.platform) {
+            case "title":
+              example = "Vintage Stoel - Eikenhout"
+              break
+            case "description":
+              example = "Prachtige vintage stoel van massief eikenhout..."
+              break
+            case "price":
+              example = "125.00"
+              break
+            case "purchasePrice":
+              example = "85.00"
+              break
+            case "category":
+              example = "Wonen & Tuin > Meubels > Stoelen"
+              break
+            case "condition":
+              example = "Gebruikt"
+              break
+            case "brand":
+              example = "Vintage"
+              break
+            case "model":
+              example = "Classic Chair"
+              break
+            case "sku":
+              example = "VS-001"
+              break
+            case "ean":
+              example = "8712345678901"
+              break
+            case "weight":
+              example = "2.5 kg"
+              break
+            case "dimensions":
+              example = "80x60x45 cm"
+              break
+            case "color":
+              example = "Bruin"
+              break
+            case "material":
+              example = "Eikenhout"
+              break
+            case "location":
+              example = "Amsterdam"
+              break
+            case "stock":
+              example = "5"
+              break
+            default:
+              example = "Voorbeeld waarde"
+          }
+          updatedMappings[index].example = example
+        }
+      }
+    }
+    
+    setFieldMappings(updatedMappings)
+  }
+
+  const resetFieldMappings = () => {
+    setFieldMappings(marketplace?.fields || [])
+  }
+
+  const addNewFieldMapping = () => {
+    const newField = {
+      platform: "",
+      marketplace: "",
+      required: false,
+      mapped: true,
+      example: "Voorbeeld waarde"
+    }
+    setFieldMappings([...fieldMappings, newField])
+  }
+
+  const removeFieldMapping = (index: number) => {
+    const updatedMappings = fieldMappings.filter((_, i) => i !== index)
+    setFieldMappings(updatedMappings)
+  }
+
+  const isValidFieldMapping = (field: any) => {
+    return field.platform && field.marketplace && field.platform.trim() !== "" && field.marketplace.trim() !== ""
+  }
+
+  const getMappedFieldsCount = () => {
+    return fieldMappings.filter(f => f.mapped && isValidFieldMapping(f)).length
   }
 
   return (
@@ -305,17 +502,48 @@ export default function MarketplaceDetailPage() {
           {/* Field Mapping */}
           <Card>
             <CardHeader>
-              <CardTitle>Veld Mapping</CardTitle>
-              <CardDescription>
-                Configureer hoe je productvelden worden gemapt naar {marketplace.name} velden
-              </CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Veld Mapping</CardTitle>
+                  <CardDescription>
+                    Configureer hoe je productvelden worden gemapt naar {marketplace.name} velden
+                  </CardDescription>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setShowFieldMapping(!showFieldMapping)}
+                  >
+                    {showFieldMapping ? 'Bekijken' : 'Bewerken'}
+                  </Button>
+                  {showFieldMapping && (
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={addNewFieldMapping}
+                    >
+                      + Nieuw Veld
+                    </Button>
+                  )}
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={resetFieldMappings}
+                  >
+                    Reset
+                  </Button>
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {fieldMappings.map((field, index) => (
-                  <div key={index} className="flex items-center space-x-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
+                  <div key={index} className={`p-4 border border-gray-200 dark:border-gray-700 rounded-lg transition-all ${
+                    field.mapped ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-gray-800/50'
+                  }`}>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center space-x-2">
                         <span className="text-sm font-medium text-gray-900 dark:text-white">
                           {field.platform}
                         </span>
@@ -324,26 +552,152 @@ export default function MarketplaceDetailPage() {
                           {field.marketplace}
                         </span>
                         {field.required && (
-                          <span className="text-red-500 text-xs">*</span>
+                          <span className="text-red-500 text-xs font-bold">*</span>
                         )}
                       </div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Voorbeeld: {field.example}
-                      </p>
+                      <div className="flex items-center space-x-2">
+                        <div className={`w-3 h-3 rounded-full ${
+                          field.mapped ? 'bg-green-500' : 'bg-gray-300'
+                        }`} />
+                        <span className="text-xs text-gray-600 dark:text-gray-400">
+                          {field.mapped ? 'Gemapt' : 'Niet gemapt'}
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleFieldMappingToggle(index)}
+                          className="h-6 w-6 p-0"
+                        >
+                          {field.mapped ? (
+                            <CheckCircle className="h-3 w-3 text-green-500" />
+                          ) : (
+                            <AlertCircle className="h-3 w-3 text-gray-400" />
+                          )}
+                        </Button>
+                        {showFieldMapping && !field.required && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeFieldMapping(index)}
+                            className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-3 h-3 rounded-full ${
-                        field.mapped ? 'bg-green-500' : 'bg-gray-300'
-                      }`} />
-                      <span className="text-xs text-gray-600 dark:text-gray-400">
-                        {field.mapped ? 'Gemapt' : 'Niet gemapt'}
-                      </span>
-                    </div>
+                    
+                    {showFieldMapping && (
+                      <div className="space-y-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div>
+                            <label className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-1 block">
+                              Platform Veld
+                            </label>
+                            <select
+                              value={field.platform}
+                              onChange={(e) => handleFieldMappingChange(index, 'platform', e.target.value)}
+                              className="w-full text-sm px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            >
+                              <option value="">Selecteer platform veld</option>
+                              {platformFields.map((platformField) => (
+                                <option key={platformField.value} value={platformField.value}>
+                                  {platformField.label} - {platformField.description}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-1 block">
+                              {marketplace.name} Veld
+                            </label>
+                            <select
+                              value={field.marketplace}
+                              onChange={(e) => handleFieldMappingChange(index, 'marketplace', e.target.value)}
+                              className="w-full text-sm px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            >
+                              <option value="">Selecteer {marketplace.name} veld</option>
+                              {marketplaceFields[marketplace.id as keyof typeof marketplaceFields]?.map((marketplaceField) => (
+                                <option key={marketplaceField.value} value={marketplaceField.value}>
+                                  {marketplaceField.label} - {marketplaceField.description}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-1 block">
+                            Voorbeeld Waarde
+                          </label>
+                          <Input
+                            value={field.example}
+                            onChange={(e) => handleFieldMappingChange(index, 'example', e.target.value)}
+                            className="text-sm"
+                            placeholder="Voorbeeld waarde"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                      Voorbeeld: {field.example}
+                    </p>
                   </div>
                 ))}
               </div>
+              
+              {showFieldMapping && (
+                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      {getMappedFieldsCount()} van {fieldMappings.length} velden gemapt
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Button variant="outline" size="sm" onClick={resetFieldMappings}>
+                        Reset Alle
+                      </Button>
+                      <Button size="sm" onClick={() => setShowFieldMapping(false)}>
+                        Klaar
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
+
+          {/* Field Mapping Preview */}
+          {showFieldMapping && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Mapping Preview</CardTitle>
+                <CardDescription>
+                  Voorbeeld van hoe je productdata wordt gemapt naar {marketplace.name}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="font-medium text-gray-900 dark:text-white">Platform Veld</div>
+                    <div className="font-medium text-gray-900 dark:text-white">{marketplace.name} Veld</div>
+                    <div className="font-medium text-gray-900 dark:text-white">Voorbeeld Waarde</div>
+                  </div>
+                  {fieldMappings.filter(f => f.mapped && isValidFieldMapping(f)).map((field, index) => (
+                    <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{field.platform}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{field.marketplace}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 font-mono">{field.example}</div>
+                    </div>
+                  ))}
+                  {getMappedFieldsCount() === 0 && (
+                    <div className="text-center py-4 text-gray-500 dark:text-gray-400">
+                      Geen velden gemapt. Klik op "Bewerken" om velden te mappen.
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Settings */}
           <Card>
@@ -373,7 +727,7 @@ export default function MarketplaceDetailPage() {
                     Synchronisatie Interval
                   </label>
                   <select
-                    value={settings.syncInterval}
+                    value={settings.syncInterval as string}
                     onChange={(e) => setSettings({...settings, syncInterval: e.target.value})}
                     className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   >
@@ -392,7 +746,7 @@ export default function MarketplaceDetailPage() {
                   </label>
                   <Input
                     type="number"
-                    value={settings.priceMarkup}
+                    value={settings.priceMarkup as number}
                     onChange={(e) => setSettings({...settings, priceMarkup: parseInt(e.target.value)})}
                     placeholder="0"
                     className="mt-1"
@@ -403,7 +757,7 @@ export default function MarketplaceDetailPage() {
                     Standaard Locatie
                   </label>
                   <Input
-                    value={settings.defaultLocation}
+                    value={settings.defaultLocation as string}
                     onChange={(e) => setSettings({...settings, defaultLocation: e.target.value})}
                     placeholder="Amsterdam"
                     className="mt-1"
@@ -421,7 +775,7 @@ export default function MarketplaceDetailPage() {
                         Fulfillment Type
                       </label>
                       <select
-                        value={settings.fulfillmentType || "FBR"}
+                        value={(settings.fulfillmentType as string) || "FBR"}
                         onChange={(e) => setSettings({...settings, fulfillmentType: e.target.value})}
                         className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       >
@@ -442,7 +796,7 @@ export default function MarketplaceDetailPage() {
                         Listing Type
                       </label>
                       <select
-                        value={settings.listingType || "FixedPrice"}
+                        value={(settings.listingType as string) || "FixedPrice"}
                         onChange={(e) => setSettings({...settings, listingType: e.target.value})}
                         className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       >
@@ -464,7 +818,7 @@ export default function MarketplaceDetailPage() {
                         Marketplace
                       </label>
                       <select
-                        value={settings.marketplace || "EU"}
+                        value={(settings.marketplace as string) || "EU"}
                         onChange={(e) => setSettings({...settings, marketplace: e.target.value})}
                         className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       >

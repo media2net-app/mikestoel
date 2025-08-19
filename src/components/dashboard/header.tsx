@@ -263,7 +263,7 @@ export function DashboardHeader() {
                 <div className="p-6 text-center">
                   <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-600 dark:text-gray-400">
-                    Geen resultaten gevonden voor "{searchQuery}"
+                                         Geen resultaten gevonden voor &quot;{searchQuery}&quot;
                   </p>
                 </div>
               ) : (

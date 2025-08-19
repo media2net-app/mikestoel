@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Save, User, Bell, Shield, Palette, Globe } from "lucide-react"
+import { Save, User, Bell, Shield, Globe } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -34,7 +34,7 @@ export default function SettingsPage() {
     setIsLoading(false)
   }
 
-  const handleInputChange = (key: string, value: any) => {
+  const handleInputChange = (key: string, value: string | boolean) => {
     setSettings(prev => ({
       ...prev,
       [key]: value

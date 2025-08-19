@@ -5,9 +5,7 @@ import {
   TrendingUp, 
   TrendingDown, 
   DollarSign, 
-  Package, 
   ShoppingCart, 
-  Eye,
   BarChart3,
   Calendar,
   Filter,
@@ -16,7 +14,7 @@ import {
 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+
 import { useCountUp } from "@/hooks/use-count-up"
 
 // Sample data for analytics

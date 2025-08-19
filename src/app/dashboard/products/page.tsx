@@ -161,7 +161,7 @@ export default function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState("all")
   const [marketplaceFilter, setMarketplaceFilter] = useState<string[]>([])
   const [showMarketplaceDropdown, setShowMarketplaceDropdown] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<any>(null)
+  const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null)
   const [showModal, setShowModal] = useState(false)
 
   // Filter products based on search and filters
@@ -223,7 +223,7 @@ export default function ProductsPage() {
     return price - purchasePrice
   }
 
-  const handleProductClick = (product: any) => {
+  const handleProductClick = (product: typeof products[0]) => {
     // Navigate to product detail page instead of opening modal
     router.push(`/dashboard/products/${product.id}`)
   }
@@ -234,8 +234,10 @@ export default function ProductsPage() {
   }
 
   const handleEditProduct = () => {
-    closeModal()
-    router.push(`/dashboard/products/${selectedProduct.id}/edit`)
+    if (selectedProduct) {
+      closeModal()
+      router.push(`/dashboard/products/${selectedProduct.id}/edit`)
+    }
   }
 
   const handleManageMarketplaces = () => {
@@ -406,7 +408,7 @@ export default function ProductsPage() {
 
       {/* Products Grid */}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-6">
           {filteredProducts.map((product) => {
             const profit = calculateProfit(product.price, product.purchasePrice)
             const margin = calculateProfitMargin(product.price, product.purchasePrice)
@@ -439,13 +441,13 @@ export default function ProductsPage() {
                     {product.status === 'active' ? 'Actief' : 'In behandeling'}
                   </div>
                 </div>
-                <CardContent className="p-4">
-                  <div className="space-y-3">
+                <CardContent className="p-3 lg:p-4">
+                  <div className="space-y-2 lg:space-y-3">
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white">
+                      <h3 className="font-semibold text-gray-900 dark:text-white text-sm lg:text-base">
                         {product.name}
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-xs lg:text-sm text-gray-600 dark:text-gray-400">
                         {product.category}
                       </p>
                     </div>
@@ -453,29 +455,29 @@ export default function ProductsPage() {
                     {/* Pricing Information */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-lg font-bold text-gray-900 dark:text-white">
+                        <span className="text-base lg:text-lg font-bold text-gray-900 dark:text-white">
                           €{product.price}
                         </span>
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                        <span className="text-xs lg:text-sm text-gray-600 dark:text-gray-400">
                           Voorraad: {product.stock}
                         </span>
                       </div>
                       
                       {/* Purchase Price */}
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between text-xs lg:text-sm">
                         <span className="text-gray-600 dark:text-gray-400">Inkoop:</span>
                         <span className="text-gray-700 dark:text-gray-300">€{product.purchasePrice}</span>
                       </div>
                       
                       {/* Profit and Margin */}
                       <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2 space-y-1">
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs lg:text-sm">
                           <span className="text-gray-600 dark:text-gray-400">Winst:</span>
                           <span className={`font-semibold ${profit >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                             €{profit}
                           </span>
                         </div>
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs lg:text-sm">
                           <span className="text-gray-600 dark:text-gray-400">Marge:</span>
                           <span className={`font-semibold ${parseFloat(margin) >= 20 ? 'text-green-600 dark:text-green-400' : parseFloat(margin) >= 10 ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400'}`}>
                             {margin}%
@@ -484,41 +486,43 @@ export default function ProductsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center justify-between text-xs lg:text-sm text-gray-600 dark:text-gray-400">
                       <div className="flex items-center space-x-1">
-                        <Eye className="h-4 w-4" />
+                        <Eye className="h-3 w-3 lg:h-4 lg:w-4" />
                         <span>{product.views}</span>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <ShoppingCart className="h-4 w-4" />
+                        <ShoppingCart className="h-3 w-3 lg:h-4 lg:w-4" />
                         <span>{product.sales}</span>
                       </div>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-1 lg:gap-2">
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="flex-1"
+                        className="flex-1 text-xs lg:text-sm"
                         onClick={(e) => {
                           e.stopPropagation()
                           router.push(`/dashboard/products/${product.id}`)
                         }}
                       >
-                        <Eye className="h-4 w-4 mr-1" />
-                        Details
+                        <Eye className="h-3 w-3 lg:h-4 lg:w-4 mr-1" />
+                        <span className="hidden sm:inline">Details</span>
+                        <span className="sm:hidden">Bekijk</span>
                       </Button>
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="flex-1"
+                        className="flex-1 text-xs lg:text-sm"
                         onClick={(e) => {
                           e.stopPropagation()
                           router.push(`/dashboard/products/${product.id}/edit`)
                         }}
                       >
-                        <Edit className="h-4 w-4 mr-1" />
-                        Bewerken
+                        <Edit className="h-3 w-3 lg:h-4 lg:w-4 mr-1" />
+                        <span className="hidden sm:inline">Bewerken</span>
+                        <span className="sm:hidden">Edit</span>
                       </Button>
                     </div>
                   </div>
