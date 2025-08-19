@@ -10,7 +10,8 @@ import {
   Plus,
   List,
   Menu,
-  X
+  X,
+  Car
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -33,6 +34,15 @@ const navigation = [
     ]
   },
   {
+    name: "Auto's",
+    href: "/dashboard/cars",
+    icon: Car,
+    children: [
+      { name: "Alle Auto's", href: "/dashboard/cars", icon: List },
+      { name: "Nieuwe Auto", href: "/dashboard/cars/new", icon: Plus },
+    ]
+  },
+  {
     name: "Marktplaatsen",
     href: "/dashboard/marketplaces",
     icon: ShoppingCart,
@@ -41,6 +51,29 @@ const navigation = [
       { name: "Bol.com", href: "/dashboard/marketplaces/bol", icon: ExternalLink },
       { name: "eBay", href: "/dashboard/marketplaces/ebay", icon: ExternalLink },
       { name: "Amazon", href: "/dashboard/marketplaces/amazon", icon: ExternalLink },
+      { name: "eBay Kleinanzeigen", href: "/dashboard/marketplaces/ebay-kleinanzeigen", icon: ExternalLink },
+      { name: "Kleinanzeigen.de", href: "/dashboard/marketplaces/kleinanzeigen", icon: ExternalLink },
+      { name: "Facebook Marketplace", href: "/dashboard/marketplaces/facebook", icon: ExternalLink },
+      { name: "Vinted", href: "/dashboard/marketplaces/vinted", icon: ExternalLink },
+      { name: "2dehands.be", href: "/dashboard/marketplaces/2dehands", icon: ExternalLink },
+      { name: "2ememain.be", href: "/dashboard/marketplaces/2ememain", icon: ExternalLink },
+    ]
+  },
+  {
+    name: "Auto Platforms",
+    href: "/dashboard/auto-marketplaces",
+    icon: ShoppingCart,
+    children: [
+      { name: "Autoscout24", href: "/dashboard/marketplaces/autoscout24", icon: ExternalLink },
+      { name: "Mobile.de", href: "/dashboard/marketplaces/mobile", icon: ExternalLink },
+      { name: "Autotrack", href: "/dashboard/marketplaces/autotrack", icon: ExternalLink },
+      { name: "Gaspedaal", href: "/dashboard/marketplaces/gaspedaal", icon: ExternalLink },
+      { name: "Autoblog", href: "/dashboard/marketplaces/autoblog", icon: ExternalLink },
+      { name: "Autovandaag", href: "/dashboard/marketplaces/autovandaag", icon: ExternalLink },
+      { name: "Autoweek", href: "/dashboard/marketplaces/autoweek", icon: ExternalLink },
+      { name: "Autozine", href: "/dashboard/marketplaces/autozine", icon: ExternalLink },
+      { name: "Autokopen", href: "/dashboard/marketplaces/autokopen", icon: ExternalLink },
+      { name: "Autos.nl", href: "/dashboard/marketplaces/autos-nl", icon: ExternalLink },
     ]
   },
   {

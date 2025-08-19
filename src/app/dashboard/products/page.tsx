@@ -35,7 +35,7 @@ const products = [
     stock: 3,
     views: 45,
     sales: 2,
-    image: "/api/placeholder/300/300?text=Vintage+Stoel",
+    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=400&fit=crop&crop=center",
     marketplaces: ["Marktplaats", "Bol.com", "eBay"]
   },
   {
@@ -48,7 +48,7 @@ const products = [
     stock: 1,
     views: 23,
     sales: 1,
-    image: "/api/placeholder/300/300?text=Moderne+Tafel",
+    image: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=400&h=400&fit=crop&crop=center",
     marketplaces: ["Marktplaats", "Bol.com"]
   },
   {
@@ -61,7 +61,7 @@ const products = [
     stock: 1,
     views: 12,
     sales: 0,
-    image: "/api/placeholder/300/300?text=Antieke+Kast",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center",
     marketplaces: ["Marktplaats"]
   },
   {
@@ -74,7 +74,7 @@ const products = [
     stock: 5,
     views: 67,
     sales: 3,
-    image: "/api/placeholder/300/300?text=Design+Lamp",
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop&crop=center",
     marketplaces: ["Marktplaats", "Bol.com", "eBay", "Amazon"]
   },
   {
@@ -87,7 +87,7 @@ const products = [
     stock: 2,
     views: 34,
     sales: 1,
-    image: "/api/placeholder/300/300?text=Vintage+Spiegel",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
     marketplaces: ["Marktplaats", "Bol.com"]
   },
   {
@@ -100,7 +100,7 @@ const products = [
     stock: 4,
     views: 28,
     sales: 1,
-    image: "/api/placeholder/300/300?text=Eetkamerstoel",
+    image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=400&fit=crop&crop=center",
     marketplaces: ["Marktplaats", "Bol.com"]
   },
   {
@@ -113,7 +113,7 @@ const products = [
     stock: 2,
     views: 41,
     sales: 2,
-    image: "/api/placeholder/300/300?text=Koffietafel",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center",
     marketplaces: ["Marktplaats", "Bol.com"]
   },
   {
@@ -126,7 +126,8 @@ const products = [
     stock: 3,
     views: 19,
     sales: 1,
-    image: "/api/placeholder/300/300?text=Boekenkast",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center",
+    marketplaces: ["Marktplaats", "Bol.com"]
   },
   {
     id: 9,
@@ -138,7 +139,8 @@ const products = [
     stock: 6,
     views: 52,
     sales: 3,
-    image: "/api/placeholder/300/300?text=Hanglamp",
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop&crop=center",
+    marketplaces: ["Marktplaats", "Bol.com"]
   },
   {
     id: 10,
@@ -150,7 +152,8 @@ const products = [
     stock: 8,
     views: 38,
     sales: 2,
-    image: "/api/placeholder/300/300?text=Wanddecoratie",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
+    marketplaces: ["Marktplaats", "Bol.com"]
   },
 ]
 

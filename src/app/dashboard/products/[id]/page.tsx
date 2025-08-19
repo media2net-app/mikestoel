@@ -1,6 +1,6 @@
 "use client"
 
-
+import { useEffect } from "react"
 import { 
   ArrowLeft, 
   Edit, 
@@ -14,7 +14,9 @@ import {
   BarChart3,
   ExternalLink,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -34,7 +36,7 @@ const mockProducts = [
     views: 45,
     sales: 2,
     description: "Prachtige vintage stoel van massief eikenhout, perfect voor elke woonkamer. Deze stoel is handgemaakt en heeft een unieke patina die alleen door de tijd kan worden gecreëerd.",
-    image: "/api/placeholder/300/300?text=Vintage+Stoel",
+    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=400&fit=crop&crop=center",
     createdAt: "2024-01-15",
     lastUpdated: "2024-01-20",
     marketplaces: [
@@ -54,7 +56,7 @@ const mockProducts = [
     views: 23,
     sales: 1,
     description: "Elegante moderne tafel van walnoot hout met strak design. Perfect voor moderne interieurs en geschikt voor 4-6 personen.",
-    image: "/api/placeholder/300/300?text=Moderne+Tafel",
+    image: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=400&h=400&fit=crop&crop=center",
     createdAt: "2024-01-10",
     lastUpdated: "2024-01-18",
     marketplaces: [
@@ -73,7 +75,7 @@ const mockProducts = [
     views: 12,
     sales: 0,
     description: "Antieke kast van mahonie hout uit de jaren 1920. Deze kast heeft een rijke geschiedenis en is perfect gerestaureerd.",
-    image: "/api/placeholder/300/300?text=Antieke+Kast",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center",
     createdAt: "2024-01-05",
     lastUpdated: "2024-01-12",
     marketplaces: [
@@ -91,7 +93,7 @@ const mockProducts = [
     views: 67,
     sales: 3,
     description: "Moderne design lamp van messing met warme gloed. Perfect voor sfeervolle verlichting in elke ruimte.",
-    image: "/api/placeholder/300/300?text=Design+Lamp",
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop&crop=center",
     createdAt: "2024-01-08",
     lastUpdated: "2024-01-22",
     marketplaces: [
@@ -110,13 +112,13 @@ const mockProducts = [
     stock: 2,
     views: 34,
     sales: 1,
-    description: "Vintage spiegel met gouden lijst, perfect voor het toevoegen van elegantie aan elke ruimte.",
-    image: "/api/placeholder/300/300?text=Vintage+Spiegel",
+    description: "Elegante vintage spiegel met gouden lijst. Deze spiegel is perfect voor het toevoegen van een vleugje luxe aan elke ruimte.",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
     createdAt: "2024-01-12",
     lastUpdated: "2024-01-19",
     marketplaces: [
       { name: "Marktplaats", status: "active", price: 180, views: 20, sales: 1 },
-      { name: "Bol.com", status: "inactive", price: 190, views: 14, sales: 0 }
+      { name: "Bol.com", status: "active", price: 190, views: 14, sales: 0 }
     ]
   },
   {
@@ -129,13 +131,13 @@ const mockProducts = [
     stock: 4,
     views: 28,
     sales: 1,
-    description: "Comfortabele eetkamerstoel van beukenhout, perfect voor dagelijks gebruik en duurzaam.",
-    image: "/api/placeholder/300/300?text=Eetkamerstoel",
+    description: "Comfortabele eetkamerstoel van beukenhout. Deze stoel is duurzaam en perfect voor dagelijks gebruik.",
+    image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=400&fit=crop&crop=center",
     createdAt: "2024-01-14",
     lastUpdated: "2024-01-21",
     marketplaces: [
       { name: "Marktplaats", status: "active", price: 95, views: 18, sales: 1 },
-      { name: "Bol.com", status: "active", price: 105, views: 10, sales: 0 }
+      { name: "Bol.com", status: "active", price: 100, views: 10, sales: 0 }
     ]
   },
   {
@@ -146,15 +148,72 @@ const mockProducts = [
     status: "active",
     category: "Tafels",
     stock: 2,
-    views: 19,
-    sales: 0,
-    description: "Moderne koffietafel van glas en staal, perfect voor een strakke uitstraling.",
-    image: "/api/placeholder/300/300?text=Koffietafel",
+    views: 41,
+    sales: 2,
+    description: "Moderne koffietafel van glas en staal. Deze tafel is elegant en praktisch voor elke woonkamer.",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center",
     createdAt: "2024-01-16",
     lastUpdated: "2024-01-23",
     marketplaces: [
-      { name: "Marktplaats", status: "active", price: 220, views: 12, sales: 0 },
-      { name: "Bol.com", status: "pending", price: 235, views: 7, sales: 0 }
+      { name: "Marktplaats", status: "active", price: 220, views: 25, sales: 2 },
+      { name: "Bol.com", status: "active", price: 230, views: 16, sales: 0 }
+    ]
+  },
+  {
+    id: 8,
+    name: "Boekenkast - Wit",
+    price: 320,
+    purchasePrice: 200,
+    status: "active",
+    category: "Kasten",
+    stock: 3,
+    views: 19,
+    sales: 1,
+    description: "Praktische boekenkast in wit. Deze kast biedt veel opslagruimte en past in elke ruimte.",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center",
+    createdAt: "2024-01-18",
+    lastUpdated: "2024-01-25",
+    marketplaces: [
+      { name: "Marktplaats", status: "active", price: 320, views: 12, sales: 1 },
+      { name: "Bol.com", status: "pending", price: 335, views: 7, sales: 0 }
+    ]
+  },
+  {
+    id: 9,
+    name: "Hanglamp - Industrieel",
+    price: 145,
+    purchasePrice: 90,
+    status: "active",
+    category: "Verlichting",
+    stock: 6,
+    views: 52,
+    sales: 3,
+    description: "Industriële hanglamp met vintage uitstraling. Deze lamp is perfect voor het creëren van sfeer.",
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop&crop=center",
+    createdAt: "2024-01-20",
+    lastUpdated: "2024-01-27",
+    marketplaces: [
+      { name: "Marktplaats", status: "active", price: 145, views: 30, sales: 2 },
+      { name: "Bol.com", status: "active", price: 150, views: 22, sales: 1 }
+    ]
+  },
+  {
+    id: 10,
+    name: "Wanddecoratie - Canvas",
+    price: 75,
+    purchasePrice: 45,
+    status: "active",
+    category: "Decoratie",
+    stock: 8,
+    views: 38,
+    sales: 2,
+    description: "Moderne wanddecoratie op canvas. Deze decoratie voegt kleur en stijl toe aan elke muur.",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
+    createdAt: "2024-01-22",
+    lastUpdated: "2024-01-29",
+    marketplaces: [
+      { name: "Marktplaats", status: "active", price: 75, views: 25, sales: 2 },
+      { name: "Bol.com", status: "inactive", price: 80, views: 13, sales: 0 }
     ]
   }
 ]
@@ -190,6 +249,53 @@ export default function ProductDetailPage() {
     router.push('/dashboard/analytics')
   }
 
+  // Navigation functions
+  const getPreviousProduct = () => {
+    const currentIndex = mockProducts.findIndex(p => p.id === productId)
+    if (currentIndex > 0) {
+      return mockProducts[currentIndex - 1]
+    }
+    return null
+  }
+
+  const getNextProduct = () => {
+    const currentIndex = mockProducts.findIndex(p => p.id === productId)
+    if (currentIndex < mockProducts.length - 1) {
+      return mockProducts[currentIndex + 1]
+    }
+    return null
+  }
+
+  const handlePreviousProduct = () => {
+    const prevProduct = getPreviousProduct()
+    if (prevProduct) {
+      router.push(`/dashboard/products/${prevProduct.id}`)
+    }
+  }
+
+  const handleNextProduct = () => {
+    const nextProduct = getNextProduct()
+    if (nextProduct) {
+      router.push(`/dashboard/products/${nextProduct.id}`)
+    }
+  }
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        handlePreviousProduct()
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        handleNextProduct()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [productId])
+
   if (!product) {
     return (
       <div className="space-y-6">
@@ -222,13 +328,42 @@ export default function ProductDetailPage() {
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
-          <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-              {product.name}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-sm lg:text-base">
-              {product.category} • Product ID: {product.id}
-            </p>
+          <div className="flex items-center space-x-4">
+            <div>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
+                {product.name}
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 text-sm lg:text-base">
+                {product.category} • Product ID: {product.id}
+              </p>
+            </div>
+            
+            {/* Navigation buttons */}
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handlePreviousProduct}
+                disabled={!getPreviousProduct()}
+                className="h-8 w-8 p-0"
+                title={getPreviousProduct() ? `Vorige: ${getPreviousProduct()?.name}` : "Geen vorige product"}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="text-sm text-gray-500 dark:text-gray-400 px-2 hidden sm:inline">
+                {mockProducts.findIndex(p => p.id === productId) + 1} van {mockProducts.length}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleNextProduct}
+                disabled={!getNextProduct()}
+                className="h-8 w-8 p-0"
+                title={getNextProduct() ? `Volgende: ${getNextProduct()?.name}` : "Geen volgende product"}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
         <div className="flex items-center space-x-2 lg:space-x-3">
