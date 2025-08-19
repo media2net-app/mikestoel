@@ -329,8 +329,12 @@ export default function AutoMarketplacesPage() {
                         alt={marketplace.name}
                         className="w-full h-full object-contain"
                         onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.nextElementSibling.style.display = 'flex';
+                          const target = e.currentTarget as HTMLImageElement;
+                          target.style.display = 'none';
+                          const nextElement = target.nextElementSibling as HTMLElement;
+                          if (nextElement) {
+                            nextElement.style.display = 'flex';
+                          }
                         }}
                       />
                       <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs font-bold" style={{display: 'none'}}>
