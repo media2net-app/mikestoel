@@ -1,5 +1,4 @@
 import { LoginForm } from "@/components/auth/login-form"
-import { DarkModeToggle } from "@/components/ui/dark-mode-toggle"
 
 export default function Home() {
   return (
@@ -11,10 +10,7 @@ export default function Home() {
         <div className="absolute top-40 left-40 w-80 h-80 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000 dark:opacity-10" />
       </div>
 
-      {/* Dark mode toggle */}
-      <div className="absolute top-4 right-4 z-10">
-        <DarkModeToggle />
-      </div>
+
 
       {/* Main content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">

@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" suppressHydrationWarning>
+    <html lang="nl" className="dark" suppressHydrationWarning>
       <body className={inter.className}>
         <div className="min-h-screen bg-background">
           {children}

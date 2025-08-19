@@ -27,7 +27,7 @@ const marketplaceData = {
   marktplaats: {
     id: "marktplaats",
     name: "Marktplaats",
-    logo: "https://via.placeholder.com/120x40/FF6B35/FFFFFF?text=Marktplaats",
+    logo: "/png-clipart-marktplaats-nl-sales-marktplaats-b-v-service-advertising-others-text-service.png",
     status: "connected",
     description: "Nederlands grootste online marktplaats voor tweedehands en nieuwe producten",
     apiKey: "mp_********_********",
@@ -53,6 +53,37 @@ const marketplaceData = {
       defaultCondition: "Gebruikt"
     }
   },
+  bol: {
+    id: "bol",
+    name: "Bol.com",
+    logo: "/png-transparent-bol-com-hd-logo.png",
+    status: "connected",
+    description: "Nederlands grootste online retailer met uitgebreide productcatalogus",
+    apiKey: "bol_********_********",
+    lastSync: "4 uur geleden",
+    products: 12,
+    sales: 6,
+    fields: [
+      { platform: "title", marketplace: "product_title", required: true, mapped: true, example: "Vintage Stoel - Eikenhout" },
+      { platform: "description", marketplace: "product_description", required: true, mapped: true, example: "Prachtige vintage stoel van massief eikenhout..." },
+      { platform: "price", marketplace: "selling_price", required: true, mapped: true, example: "125.00" },
+      { platform: "category", marketplace: "product_category", required: true, mapped: true, example: "Wonen & Tuin > Meubels > Stoelen" },
+      { platform: "condition", marketplace: "product_condition", required: true, mapped: true, example: "Gebruikt" },
+      { platform: "brand", marketplace: "brand_name", required: false, mapped: true, example: "Vintage" },
+      { platform: "model", marketplace: "model_name", required: false, mapped: false, example: "Classic Chair" },
+      { platform: "ean", marketplace: "ean_code", required: false, mapped: false, example: "8712345678901" },
+      { platform: "weight", marketplace: "package_weight", required: false, mapped: false, example: "2.5 kg" },
+    ],
+    settings: {
+      autoSync: true,
+      syncInterval: "3h",
+      priceMarkup: 3,
+      includeShipping: true,
+      defaultLocation: "Netherlands",
+      defaultCondition: "Gebruikt",
+      fulfillmentType: "FBR"
+    }
+  },
   ebay: {
     id: "ebay",
     name: "eBay",
@@ -72,6 +103,7 @@ const marketplaceData = {
       { platform: "brand", marketplace: "brand", required: false, mapped: true, example: "Vintage" },
       { platform: "model", marketplace: "model", required: false, mapped: false, example: "Classic Chair" },
       { platform: "weight", marketplace: "item_weight", required: false, mapped: false, example: "2.5 kg" },
+      { platform: "shipping", marketplace: "shipping_type", required: false, mapped: false, example: "Flat" },
     ],
     settings: {
       autoSync: true,
@@ -79,7 +111,40 @@ const marketplaceData = {
       priceMarkup: 5,
       includeShipping: true,
       defaultLocation: "Netherlands",
-      defaultCondition: "Used"
+      defaultCondition: "Used",
+      listingType: "FixedPrice"
+    }
+  },
+  amazon: {
+    id: "amazon",
+    name: "Amazon",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
+    status: "disconnected",
+    description: "Wereldwijd e-commerce platform met uitgebreide marktplaats functionaliteit",
+    apiKey: "amz_********_********",
+    lastSync: "Nooit",
+    products: 0,
+    sales: 0,
+    fields: [
+      { platform: "title", marketplace: "product_title", required: true, mapped: false, example: "Vintage Wooden Chair - Oak" },
+      { platform: "description", marketplace: "product_description", required: true, mapped: false, example: "Beautiful vintage chair made of solid oak..." },
+      { platform: "price", marketplace: "standard_price", required: true, mapped: false, example: "125.00" },
+      { platform: "category", marketplace: "product_category", required: true, mapped: false, example: "Home & Garden > Furniture > Chairs" },
+      { platform: "condition", marketplace: "condition_type", required: true, mapped: false, example: "Used" },
+      { platform: "brand", marketplace: "brand_name", required: true, mapped: false, example: "Vintage" },
+      { platform: "model", marketplace: "model_name", required: false, mapped: false, example: "Classic Chair" },
+      { platform: "asin", marketplace: "asin", required: false, mapped: false, example: "B08N5WRWNW" },
+      { platform: "weight", marketplace: "package_weight", required: false, mapped: false, example: "2.5 kg" },
+      { platform: "dimensions", marketplace: "package_dimensions", required: false, mapped: false, example: "80x60x45 cm" },
+    ],
+    settings: {
+      autoSync: false,
+      syncInterval: "6h",
+      priceMarkup: 8,
+      includeShipping: true,
+      defaultLocation: "Netherlands",
+      defaultCondition: "Used",
+      marketplace: "EU"
     }
   }
 }
@@ -129,15 +194,15 @@ export default function MarketplaceDetailPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div className="flex items-center space-x-4">
           <Link href="/dashboard/marketplaces">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-white rounded-lg p-2 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+          <div className="flex items-center space-x-4">
+            <div className="w-8 h-8 lg:w-12 lg:h-12 bg-white rounded-lg p-2 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
               <img
                 src={marketplace.logo}
                 alt={marketplace.name}
@@ -148,16 +213,16 @@ export default function MarketplaceDetailPage() {
                   target.style.display = 'none'
                   const parent = target.parentElement
                   if (parent) {
-                    parent.innerHTML = `<span class="text-xs font-bold text-gray-900 dark:text-white">${marketplace.name}</span>`
+                    parent.innerHTML = `<span class="text-sm font-bold text-gray-900 dark:text-white">${marketplace.name}</span>`
                   }
                 }}
               />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-xl lg:text-3xl font-bold text-gray-900 dark:text-white">
                 {marketplace.name} Configuratie
               </h1>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-gray-600 dark:text-gray-400 text-sm lg:text-base">
                 {marketplace.description}
               </p>
             </div>
@@ -175,9 +240,9 @@ export default function MarketplaceDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
         {/* Main Configuration */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 lg:space-y-6">
           {/* Connection Status */}
           <Card>
             <CardHeader>
@@ -187,7 +252,7 @@ export default function MarketplaceDetailPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     API Sleutel
@@ -285,7 +350,7 @@ export default function MarketplaceDetailPage() {
             <CardHeader>
               <CardTitle>Instellingen</CardTitle>
               <CardDescription>
-                Configureer de synchronisatie en export instellingen
+                Configureer de synchronisatie en export instellingen voor {marketplace.name}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -315,7 +380,9 @@ export default function MarketplaceDetailPage() {
                     <option value="30m">30 minuten</option>
                     <option value="1h">1 uur</option>
                     <option value="2h">2 uur</option>
+                    <option value="3h">3 uur</option>
                     <option value="4h">4 uur</option>
+                    <option value="6h">6 uur</option>
                     <option value="1d">1 dag</option>
                   </select>
                 </div>
@@ -343,6 +410,75 @@ export default function MarketplaceDetailPage() {
                   />
                 </div>
               </div>
+
+              {/* Marketplace-specific settings */}
+              {marketplace.id === "bol" && (
+                <div className="border-t pt-4">
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Bol.com Specifieke Instellingen</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Fulfillment Type
+                      </label>
+                      <select
+                        value={settings.fulfillmentType || "FBR"}
+                        onChange={(e) => setSettings({...settings, fulfillmentType: e.target.value})}
+                        className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      >
+                        <option value="FBR">Fulfillment by Bol.com</option>
+                        <option value="FBM">Fulfillment by Merchant</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {marketplace.id === "ebay" && (
+                <div className="border-t pt-4">
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">eBay Specifieke Instellingen</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Listing Type
+                      </label>
+                      <select
+                        value={settings.listingType || "FixedPrice"}
+                        onChange={(e) => setSettings({...settings, listingType: e.target.value})}
+                        className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      >
+                        <option value="FixedPrice">Vaste Prijs</option>
+                        <option value="Auction">Veiling</option>
+                        <option value="AuctionWithBIN">Veiling met Koop Nu</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {marketplace.id === "amazon" && (
+                <div className="border-t pt-4">
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Amazon Specifieke Instellingen</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Marketplace
+                      </label>
+                      <select
+                        value={settings.marketplace || "EU"}
+                        onChange={(e) => setSettings({...settings, marketplace: e.target.value})}
+                        className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      >
+                        <option value="EU">Europese Unie</option>
+                        <option value="DE">Duitsland</option>
+                        <option value="FR">Frankrijk</option>
+                        <option value="IT">Italië</option>
+                        <option value="ES">Spanje</option>
+                        <option value="UK">Verenigd Koninkrijk</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

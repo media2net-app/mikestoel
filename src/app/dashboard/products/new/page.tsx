@@ -5,12 +5,9 @@ import {
   ArrowLeft, 
   Upload, 
   X, 
-  Plus,
   Save,
   Package,
-  Tag,
   Euro,
-  Hash,
   FileText,
   Image as ImageIcon
 } from "lucide-react"
@@ -27,6 +24,7 @@ export default function NewProductPage() {
     name: "",
     description: "",
     price: "",
+    purchasePrice: "",
     category: "",
     stock: "",
     sku: "",
@@ -171,10 +169,10 @@ export default function NewProductPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Prijs (€) *
+                  Verkoopprijs (€) *
                 </label>
                 <Input
                   name="price"
@@ -183,6 +181,20 @@ export default function NewProductPage() {
                   value={formData.price}
                   onChange={handleInputChange}
                   placeholder="125.00"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Inkoopprijs (€) *
+                </label>
+                <Input
+                  name="purchasePrice"
+                  type="number"
+                  step="0.01"
+                  value={formData.purchasePrice}
+                  onChange={handleInputChange}
+                  placeholder="85.00"
                   required
                 />
               </div>
@@ -217,6 +229,33 @@ export default function NewProductPage() {
                 </select>
               </div>
             </div>
+            
+            {/* Profit Preview */}
+            {formData.price && formData.purchasePrice && (
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 space-y-2">
+                <h4 className="font-medium text-gray-900 dark:text-white">Winstmarge Preview</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">Winst:</span>
+                    <span className={`font-semibold ${parseFloat(formData.price) - parseFloat(formData.purchasePrice) >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                      €{(parseFloat(formData.price) - parseFloat(formData.purchasePrice)).toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">Marge:</span>
+                    <span className={`font-semibold ${((parseFloat(formData.price) - parseFloat(formData.purchasePrice)) / parseFloat(formData.price) * 100) >= 20 ? 'text-green-600 dark:text-green-400' : ((parseFloat(formData.price) - parseFloat(formData.purchasePrice)) / parseFloat(formData.price) * 100) >= 10 ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400'}`}>
+                      {((parseFloat(formData.price) - parseFloat(formData.purchasePrice)) / parseFloat(formData.price) * 100).toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">ROI:</span>
+                    <span className={`font-semibold ${((parseFloat(formData.price) - parseFloat(formData.purchasePrice)) / parseFloat(formData.purchasePrice) * 100) >= 50 ? 'text-green-600 dark:text-green-400' : ((parseFloat(formData.price) - parseFloat(formData.purchasePrice)) / parseFloat(formData.purchasePrice) * 100) >= 25 ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400'}`}>
+                      {((parseFloat(formData.price) - parseFloat(formData.purchasePrice)) / parseFloat(formData.purchasePrice) * 100).toFixed(1)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -327,7 +366,7 @@ export default function NewProductPage() {
                 placeholder="vintage, hout, stoel, antiek"
               />
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                Scheid tags met komma's
+                Scheid tags met komma&apos;s
               </p>
             </div>
           </CardContent>

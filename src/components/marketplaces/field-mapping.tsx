@@ -56,7 +56,7 @@ export function FieldMappingComponent({
     onMappingChange(newMappings)
   }
 
-  const updateMapping = (index: number, field: keyof FieldMapping, value: any) => {
+  const updateMapping = (index: number, field: keyof FieldMapping, value: string | boolean) => {
     const newMappings = [...mappings]
     newMappings[index] = { ...newMappings[index], [field]: value }
     onMappingChange(newMappings)

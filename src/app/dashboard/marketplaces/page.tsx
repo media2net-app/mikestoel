@@ -1,3 +1,5 @@
+"use client"
+
 import { 
   ExternalLink, 
   Settings, 
@@ -6,8 +8,7 @@ import {
   Plus,
   RefreshCw,
   BarChart3,
-  Link as LinkIcon,
-  Unlink
+  Link as LinkIcon
 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -17,7 +18,7 @@ const marketplaces = [
   {
     id: "marktplaats",
     name: "Marktplaats",
-    logo: "https://via.placeholder.com/120x40/FF6B35/FFFFFF?text=Marktplaats",
+    logo: "/png-clipart-marktplaats-nl-sales-marktplaats-b-v-service-advertising-others-text-service.png",
     status: "connected",
     products: 18,
     sales: 8,
@@ -74,7 +75,7 @@ const marketplaces = [
   {
     id: "bol",
     name: "Bol.com",
-    logo: "https://via.placeholder.com/120x40/003087/FFFFFF?text=Bol.com",
+    logo: "/png-transparent-bol-com-hd-logo.png",
     status: "pending",
     products: 0,
     sales: 0,
@@ -117,18 +118,17 @@ export default function MarketplacesPage() {
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-white rounded-lg p-2 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+                  <div className="w-12 h-12 bg-white rounded-lg p-1 flex items-center justify-center overflow-hidden">
                     <img
                       src={marketplace.logo}
                       alt={marketplace.name}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain max-w-full max-h-full"
                       onError={(e) => {
-                        // Fallback to text if image fails to load
-                        const target = e.target as HTMLImageElement
-                        target.style.display = 'none'
-                        const parent = target.parentElement
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
                         if (parent) {
-                          parent.innerHTML = `<span class="text-xs font-bold text-gray-900 dark:text-white">${marketplace.name}</span>`
+                          parent.innerHTML = `<span class="text-xs font-bold text-gray-900 dark:text-white">${marketplace.name}</span>`;
                         }
                       }}
                     />
