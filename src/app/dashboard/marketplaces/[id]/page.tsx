@@ -380,7 +380,7 @@ export default function MarketplaceDetailPage() {
     setFieldMappings(updatedMappings)
   }
 
-  const isValidFieldMapping = (field: any) => {
+  const isValidFieldMapping = (field: { platform: string; marketplace: string; required: boolean; mapped: boolean; example: string }) => {
     return field.platform && field.marketplace && field.platform.trim() !== "" && field.marketplace.trim() !== ""
   }
 
@@ -691,7 +691,7 @@ export default function MarketplaceDetailPage() {
                   ))}
                   {getMappedFieldsCount() === 0 && (
                     <div className="text-center py-4 text-gray-500 dark:text-gray-400">
-                      Geen velden gemapt. Klik op "Bewerken" om velden te mappen.
+                      Geen velden gemapt. Klik op &quot;Bewerken&quot; om velden te mappen.
                     </div>
                   )}
                 </div>
