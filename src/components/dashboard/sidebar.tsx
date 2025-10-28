@@ -11,7 +11,8 @@ import {
   List,
   Menu,
   X,
-  Car
+  Car,
+  FileText
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -80,6 +81,11 @@ const navigation = [
     name: "Analytics",
     href: "/dashboard/analytics",
     icon: BarChart3,
+  },
+  {
+    name: "API Offerte",
+    href: "/dashboard/quote",
+    icon: FileText,
   },
   {
     name: "Instellingen",
