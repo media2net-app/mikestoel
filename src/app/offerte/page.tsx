@@ -27,11 +27,17 @@ export default function OffertePage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-4xl font-bold text-orange-600 dark:text-orange-400">€1.250</div>
               <div className="text-sm text-orange-800 dark:text-orange-200 mt-1">Eenmalig</div>
               <div className="text-xs text-gray-600 dark:text-gray-400 mt-2">Excl. 21% BTW</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xs inline-block px-2 py-1 rounded-full bg-orange-200/70 text-orange-900 dark:bg-orange-800/40 dark:text-orange-100">Marktplaats Pro API</div>
+              <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mt-2">€14,95</div>
+              <div className="text-sm text-orange-800 dark:text-orange-200 mt-1">per maand</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-2">Afgenomen bij Marktplaats</div>
             </div>
             <div className="text-center">
               <Clock className="h-6 w-6 mx-auto text-orange-600 dark:text-orange-400" />
@@ -105,7 +111,46 @@ export default function OffertePage() {
         <CardContent>
           <div className="flex items-center justify-between text-sm">
             <div className="text-gray-900 dark:text-white">Webshop ontwikkeling BORK 2e hands producten</div>
-            <div className="font-semibold text-gray-900 dark:text-white">€2.500</div>
+            <div className="font-semibold text-gray-900 dark:text-white">€1.450</div>
+          </div>
+          <div className="mt-4 text-sm text-gray-700 dark:text-gray-300">
+            De webshop voor BORK 2e hands producten bevat onder andere:
+          </div>
+          <ul className="mt-2 space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc pl-5">
+            <li>Productbeheer (categorieën, filters, status: op voorraad/verkocht)</li>
+            <li>Productpagina’s met foto’s, specificaties en prijs</li>
+            <li>Zoeken en filteren op merk, model, conditie en prijs</li>
+            <li>Contact- of offerte-aanvraag per product</li>
+            <li>CMS beheer voor contentpagina’s (bijv. over ons, service)</li>
+            <li>SEO-vriendelijke URLs en basis zoekmachine optimalisatie</li>
+            <li>Responsive design, snel en toegankelijk</li>
+          </ul>
+        </CardContent>
+      </Card>
+
+      {/* Webshop pricing summary */}
+      <Card className="border-orange-200 dark:border-orange-800 bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20">
+        <CardHeader>
+          <CardTitle className="text-2xl text-orange-900 dark:text-orange-100">
+            Prijsoverzicht Webshop (BORK 2e hands)
+          </CardTitle>
+          <CardDescription className="text-orange-700 dark:text-orange-300">
+            Eenmalige ontwikkeling en terugkerende kosten
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="text-center">
+              <div className="text-4xl font-bold text-orange-600 dark:text-orange-400">€1.450</div>
+              <div className="text-sm text-orange-800 dark:text-orange-200 mt-1">Eenmalig (ontwikkeling)</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-2">Excl. 21% BTW</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xs inline-block px-2 py-1 rounded-full bg-orange-200/70 text-orange-900 dark:bg-orange-800/40 dark:text-orange-100">Webhosting</div>
+              <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mt-2">€24,95</div>
+              <div className="text-sm text-orange-800 dark:text-orange-200 mt-1">per maand</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-2">Hosting & basisbeheer</div>
+            </div>
           </div>
         </CardContent>
       </Card>
